@@ -5,9 +5,7 @@ const getCurrentUser = require('../Controller/auth.controller')
 const {validateUser} = require('../Middleware/validation');
 const {loginValidation} = require('../Middleware/loginvalidation');
 const auth = require('../Middleware/auth')
-router.get('/', function(req,res){
-    res.send('Hello world')
-  })
+
 router.post('/signup',validateUser,signup.signup)
 router.post('/login',loginValidation,login.login)
 router.get('/user',auth, getCurrentUser.getCurrentUser)
