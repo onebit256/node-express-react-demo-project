@@ -1,7 +1,8 @@
 const dashboard = require('express').Router()
-const login = require('../Controller/dashboard.controller')
+const dashboard_controller = require('../Controller/dashboard.controller')
 
-dashboard.get('/',login.main)
-dashboard.get('/login',login.login)
+dashboard.get('/',dashboard_controller.main)
+dashboard.get('/login',dashboard_controller.login)
+dashboard.post("/uploadProfilePicture",dashboard_controller.upload_files) 
 
 module.exports = dashboard
