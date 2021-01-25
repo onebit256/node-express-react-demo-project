@@ -1,8 +1,8 @@
 const createError = require("http-errors");
 const express = require('express')
-const bodyparser = require('body-parser');
 const mongoose = require('mongoose');
 const router = require('./Routes/auth.route');
+const dashboard = require('./Routes/dashboard.route');
 const path = require("path");
 const logger = require("morgan")
 const cookieParser = require("cookie-parser");
@@ -14,7 +14,9 @@ var app = express();
 
 
 // view engine setup
-// app.set("views", path.join(__dirname, "Views"));
+app.set("views", path.join(__dirname, "Views"));
+console.log(1)
+console.log(path.join(__dirname, "Views"))
 app.set("view engine", "ejs");
 
 app.use(logger("dev"));
@@ -26,10 +28,16 @@ app.use(cors());
 
 //Routes
 
-app.get('/', function(req,res){
-  res.send('Hello world')
+app.get('/testhello', function(req,res){
+  res.render(index.html);
+})
+app.get('/test/:userId', function(req,res){
+  const params = req.params;
+  const o = 0;
+  res.send(params['userId'])
 })
 app.use('/account/api',router)
+app.use('/',dashboard)
 
 //MongoDb connection
 // mongoose.connect('mongodb://localhost/test', {useNewUrlParser: true});

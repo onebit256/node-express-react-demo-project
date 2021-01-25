@@ -9,7 +9,7 @@ async function signup(req,res,next) {
   const salt = await bycrypt.genSalt(10);
   hashpassword = await bycrypt.hash(req.body.password, salt)
 
-  const emailExist = await db.user.findOne({email: req.body.email})
+  const emailExist = await db.user.findOne({where:{email: req.body.email}})
   if(emailExist){
      res.status(400).json({"error":'Email already Exist'}) 
   } else {
