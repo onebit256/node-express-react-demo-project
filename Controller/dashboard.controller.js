@@ -3,9 +3,34 @@ const bycrypt = require('bcryptjs')
 const jwt = require("jsonwebtoken");
 const multer = require("multer")
 const path = require("path");
+const auth = require("../Middleware/auth")
+const fetch = require("node-fetch")
 
 async function main(req,res,next) {
   res.render('index');
+}
+
+async function login_form(req,res,next) {
+  const username = req.body.email
+  const password = req.body.password
+
+  const response = await fetch('http://127.0.0.1:8000/account/api/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: "email=dsf@gmail.com&password=123456789"
+  })
+  //...
+  // Extract the JWT from the response
+  const jwt_token =await  response.headers.get('auth-token')
+  //...
+  // Do something the token in the login method
+  // await login({ jwt_token })
+  res.cookie('token', jwt_token)
+  // req.session.auth-token = jwt_token;
+  //res.redirect('/account/api/user');
+  res.redirect('/');
 }
 
 //Login Controller
@@ -13,6 +38,10 @@ async function login(req,res,next){
   res.render('login');
 }
 
+// contract 
+async function contract(req,res,next){
+  res.render('content/contract', {title:"hello"});
+}
 
 var storage = multer.diskStorage({ 
   destination: function (req, file, cb) { 
@@ -76,5 +105,7 @@ async function upload_files (req, res, next) {
 module.exports = {
   main,
   login,
-  upload_files
+  login_form,
+  upload_files,
+  contract
 }

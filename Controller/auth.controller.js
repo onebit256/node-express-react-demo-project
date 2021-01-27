@@ -45,7 +45,7 @@ async function signup(req,res,next) {
 
 //Login Controller
 async function login(req,res,next){
-  const emailExist = await User.findOne({email: req.body.email})
+  const emailExist = await db.user.findOne({where:{email: req.body.email}})
   if(!emailExist){
     res.status(400).json({error:"Email not Found"})
   }
@@ -60,7 +60,7 @@ async function login(req,res,next){
 async function getCurrentUser(req,res){
   console.log(req.user)
   try {
-    const user = await User.findById(req.user._id);
+    const user = await db.user.findOne({where:{id: req.user._id}});
     res.json(user);
   } catch (e) {
     res.send({ message: "Error in Fetching user" });
