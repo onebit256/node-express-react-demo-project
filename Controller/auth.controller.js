@@ -54,7 +54,7 @@ async function login(req,res,next){
     res.status(400).json({error:"Password mismatch"})
   }
   const token = jwt.sign({_id: emailExist.id},'anystring')
-  res.header('auth-token',token).json({'Token':token})
+  res.header('auth-token',token).json({'Token':token, User:emailExist})
 }
 
 async function getCurrentUser(req,res){

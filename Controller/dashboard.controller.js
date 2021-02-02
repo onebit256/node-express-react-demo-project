@@ -5,9 +5,10 @@ const multer = require("multer")
 const path = require("path");
 const auth = require("../Middleware/auth")
 const fetch = require("node-fetch")
+// const IPFS = require('ipfs')
 
 async function main(req,res,next) {
-  res.render('index');
+  res.render('index',{greeting: "hello"});
 }
 
 async function login_form(req,res,next) {
@@ -29,7 +30,7 @@ async function login_form(req,res,next) {
   // await login({ jwt_token })
   res.cookie('token', jwt_token)
   // req.session.auth-token = jwt_token;
-  //res.redirect('/account/api/user');
+  // res.redirect('/account/api/user');
   res.redirect('/');
 }
 
@@ -101,6 +102,24 @@ async function upload_files (req, res, next) {
       } 
   }) 
 }
+
+
+
+// async function main () {
+//   const node = await IPFS.create({silent: true})
+
+//   const filesAdded = await node.add({
+//     path: 'hello.txt',
+//     content: Buffer.from('Hello World 101')
+//   })
+
+//   const fileBuffer = await node.cat(filesAdded[0].hash)
+
+//   console.log('Added file contents:', fileBuffer.toString())
+
+// }
+
+
 
 module.exports = {
   main,
